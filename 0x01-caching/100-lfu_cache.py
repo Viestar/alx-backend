@@ -4,8 +4,8 @@ from base_caching import BaseCaching
 from collections import OrderedDict
 
 
-class LFUnCache(BaseCaching):
-    """ Allows storing and retrieving items from a dictionary with a LFUn
+class LFUCache(BaseCaching):
+    """ Allows storing and retrieving items from a dictionary with a LFU
     removal mechanism when the limit is reached.
     """
 
@@ -34,10 +34,10 @@ class LFUnCache(BaseCaching):
             elif key_frequency[1] < self.keys_frequency[max_positions[-1]][1]:
                 max_positions.append(i)
         max_positions.reverse()
-        for position in max_positions:
-            if self.keys_frequency[position][1] > mru_frequency:
+        for pos in max_positions:
+            if self.keys_frequency[pos][1] > mru_frequency:
                 break
-            ins_position = position
+            ins_position = pos
         self.keys_frequency.pop(mru_position)
         self.keys_frequency.insert(ins_position, [mru_key, mru_frequency])
 
@@ -47,10 +47,10 @@ class LFUnCache(BaseCaching):
             return
         if key not in self.cache_data:
             if len(self.cache_data) + 1 > BaseCaching.MAX_ITEMS:
-                lfun_key, _ = self.keys_frequency[-1]
-                self.cache_data.pop(lfun_key)
+                lfu_key, _ = self.keys_frequency[-1]
+                self.cache_data.pop(lfu_key)
                 self.keys_frequency.pop()
-                print("DISCARD:", lfun_key)
+                print("DISCARD:", lfu_key)
             self.cache_data[key] = item
             ins_index = len(self.keys_frequency)
             for i, key_frequency in enumerate(self.keys_frequency):
