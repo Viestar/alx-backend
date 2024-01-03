@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """ Module that contains class FIFOCache that inherits from BaseCache. """
-from base_caching import BaseCaching
 from collections import OrderedDict
+
+from base_caching import BaseCaching
 
 
 class LFUnCache(BaseCaching):
@@ -16,7 +17,7 @@ class LFUnCache(BaseCaching):
         self.keys_frequency = []
 
     def __reorder_items(self, mru_key):
-        """Reorders the items in this cache based on the most
+        """ Re-orders the items in this cache based on the most
         recently used item.
         """
 
