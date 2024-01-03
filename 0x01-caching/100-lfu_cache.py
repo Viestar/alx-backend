@@ -28,7 +28,6 @@ class LFUCache(BaseCaching):
             keys_to_discard = [
                 k for k, v in self.frequency.items() if v == min_frequency]
 
-            # If multiple keys have the minimum frequency, use LRU to break ties
             if len(keys_to_discard) > 1:
                 lru_key = min(self.access_time,
                               key=lambda k: self.access_time[k])
