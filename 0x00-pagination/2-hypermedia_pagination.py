@@ -28,7 +28,6 @@ class Server:
     def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
         pass
 
-
     def index_range(page: int, page_size: int) -> Tuple[int, int]:
         """ Returns a size 2 tuple with a start and end indices """
         start = 0
@@ -37,7 +36,6 @@ class Server:
             start = end
             end = end + page_size
             return (start, end)
-
 
     def get_page(self, page: int = 1, page_size: int = 10) -> List[list]:
         """ Return the correct list of rows after pagination """
@@ -50,7 +48,6 @@ class Server:
             return data[index[0]: index[1]]
         except IndexError:
             return []
-
 
     def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict[str, any]:
         """ Returns a dictionary with the pagination details """
