@@ -29,41 +29,41 @@ class Server:
         pass
 
 
-def index_range(page: int, page_size: int) -> Tuple[int, int]:
-    """ Returns a size 2 tuple with a start and end indices """
-    start = 0
-    end = 0
-    for p in range(page):
-        start = end
-        end = end + page_size
-        return (start, end)
+    def index_range(page: int, page_size: int) -> Tuple[int, int]:
+        """ Returns a size 2 tuple with a start and end indices """
+        start = 0
+        end = 0
+        for p in range(page):
+            start = end
+            end = end + page_size
+            return (start, end)
 
 
-def get_page(self, page: int = 1, page_size: int = 10) -> List[list]:
-    """ Return the correct list of rows after pagination """
-    assert type(page) == int and page > 0 and type(page_size) == int \
-        and page_size > 0
+    def get_page(self, page: int = 1, page_size: int = 10) -> List[list]:
+        """ Return the correct list of rows after pagination """
+        assert type(page) == int and page > 0 and type(page_size) == int \
+            and page_size > 0
 
-    data = self.dataset()
-    try:
-        index = index_range(page, page_size)
-        return data[index[0]: index[1]]
-    except IndexError:
-        return []
+        data = self.dataset()
+        try:
+            index = self.index_range(page, page_size)
+            return data[index[0]: index[1]]
+        except IndexError:
+            return []
 
 
-def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict[str, any]:
-    """ Returns a dictionary with the pagination details """
-    data = self.dataset()
-    total_pages = math.ceil(len(data) / page_size)
-    prev_page = page + 1 if page <= total_pages else None
-    next_page = page - 1 if page > 1 else None
+    def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict[str, any]:
+        """ Returns a dictionary with the pagination details """
+        data = self.dataset()
+        total_pages = math.ceil(len(data) / page_size)
+        prev_page = page + 1 if page <= total_pages else None
+        next_page = page - 1 if page > 1 else None
 
-    return {
-        "page_size": len(self.get_page(page, page_size)),
-        "page": page,
-        "data": self.get_page(page, page_size),
-        "next_page": next_page,
-        "prev_page": prev_page,
-        "total_pages": total_pages
-    }
+        return {
+            "page_size": len(self.get_page(page, page_size)),
+            "page": page,
+            "data": self.get_page(page, page_size),
+            "next_page": next_page,
+            "prev_page": prev_page,
+            "total_pages": total_pages
+        }
