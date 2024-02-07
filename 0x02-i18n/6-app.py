@@ -4,7 +4,6 @@
     a single route '/'
 """
 
-
 from flask import Flask, g, render_template, request
 from flask_babel import Babel
 from os import getenv
